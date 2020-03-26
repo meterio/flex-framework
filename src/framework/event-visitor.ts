@@ -6,7 +6,7 @@ export function newEventVisitor(
     ctx: Context,
     addr: string,
     coder: abi.Event
-): Connex.Meter.EventVisitor {
+): Flex.Meter.EventVisitor {
 
     const encode = (indexed: object) => {
         const topics = coder.encode(indexed)
@@ -48,7 +48,7 @@ export function newEventVisitor(
                     filter.criteria(set)
                     return this
                 },
-                range(range: Connex.Meter.Filter.Range) {
+                range(range: Flex.Meter.Filter.Range) {
                     filter.range(range)
                     return this
                 },

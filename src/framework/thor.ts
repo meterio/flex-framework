@@ -8,7 +8,7 @@ import { newHeadTracker } from './head-tracker'
 import { newExplainer } from './explainer'
 import * as R from './rules'
 
-export function newThor(driver: Connex.Driver): Connex.Meter {
+export function newThor(driver: Flex.Driver): Flex.Meter {
     const headTracker = newHeadTracker(driver)
 
     const ctx: Context = {

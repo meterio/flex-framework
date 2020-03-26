@@ -6,7 +6,7 @@ const MAX_LIMIT = 256
 export function newFilter<T extends 'event' | 'transfer'>(
     ctx: Context,
     kind: T
-): Connex.Meter.Filter<T> {
+): Flex.Meter.Filter<T> {
 
     const filterBody = {
         range: {
@@ -18,15 +18,15 @@ export function newFilter<T extends 'event' | 'transfer'>(
             offset: 0,
             limit: 10
         },
-        criteriaSet: [] as Array<Connex.Meter.Event.Criteria | Connex.Meter.Transfer.Criteria>,
+        criteriaSet: [] as Array<Flex.Meter.Event.Criteria | Flex.Meter.Transfer.Criteria>,
         order: 'asc'
     }
 
     return {
         criteria(set) {
             if (kind === 'event') {
-                R.test(set as Connex.Meter.Event.Criteria[], [eventCriteriaScheme], 'arg0')
-                filterBody.criteriaSet = (set as Connex.Meter.Event.Criteria[])
+                R.test(set as Flex.Meter.Event.Criteria[], [eventCriteriaScheme], 'arg0')
+                filterBody.criteriaSet = (set as Flex.Meter.Event.Criteria[])
                     .map(c => {
                         return {
                             address: c.address ? c.address.toLowerCase() : undefined,
@@ -38,8 +38,8 @@ export function newFilter<T extends 'event' | 'transfer'>(
                         }
                     })
             } else {
-                R.test(set as Connex.Meter.Transfer.Criteria[], [transferCriteriaScheme], 'arg0')
-                filterBody.criteriaSet = (set as Connex.Meter.Transfer.Criteria[])
+                R.test(set as Flex.Meter.Transfer.Criteria[], [transferCriteriaScheme], 'arg0')
+                filterBody.criteriaSet = (set as Flex.Meter.Transfer.Criteria[])
                     .map(c => {
                         return {
                             txOrigin: c.txOrigin ? c.txOrigin.toLowerCase() : undefined,
@@ -85,7 +85,7 @@ export function newFilter<T extends 'event' | 'transfer'>(
     }
 }
 
-const eventCriteriaScheme: V.Scheme<Connex.Meter.Event.Criteria> = {
+const eventCriteriaScheme: V.Scheme<Flex.Meter.Event.Criteria> = {
     address: V.optional(R.address),
     topic0: V.optional(R.bytes32),
     topic1: V.optional(R.bytes32),
@@ -93,7 +93,7 @@ const eventCriteriaScheme: V.Scheme<Connex.Meter.Event.Criteria> = {
     topic3: V.optional(R.bytes32),
     topic4: V.optional(R.bytes32)
 }
-const transferCriteriaScheme: V.Scheme<Connex.Meter.Transfer.Criteria> = {
+const transferCriteriaScheme: V.Scheme<Flex.Meter.Transfer.Criteria> = {
     sender: V.optional(R.address),
     recipient: V.optional(R.address),
     txOrigin: V.optional(R.address)

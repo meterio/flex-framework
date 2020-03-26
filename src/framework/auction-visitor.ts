@@ -1,6 +1,6 @@
 export function newAuctionVisitor(
     ctx: Context
-): Connex.Meter.AuctionVisitor {
+): Flex.Meter.AuctionVisitor {
     return {
         get: ()=>{
             return ctx.driver.getAuction()

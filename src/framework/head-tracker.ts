@@ -1,6 +1,6 @@
-export function newHeadTracker(driver: Connex.Driver) {
+export function newHeadTracker(driver: Flex.Driver) {
     let head = { ...driver.head }
-    let resolvers: Array<(head: Connex.Meter.Status['head']) => void> = [];
+    let resolvers: Array<(head: Flex.Meter.Status['head']) => void> = [];
 
     (async () => {
         for (; ;) {
@@ -39,7 +39,7 @@ export function newHeadTracker(driver: Connex.Driver) {
             let lastHeadId = head.id
             return {
                 next: () => {
-                    return new Promise<Connex.Meter.Status['head']>(resolve => {
+                    return new Promise<Flex.Meter.Status['head']>(resolve => {
                         if (lastHeadId !== head.id) {
                             return resolve({ ...head })
                         }

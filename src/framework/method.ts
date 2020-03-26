@@ -6,7 +6,7 @@ export function newMethod(
     ctx: Context,
     addr: string,
     coder: abi.Function
-): Connex.Meter.Method {
+): Flex.Meter.Method {
 
     let value: string | number = 0
     let token: string | number = 0

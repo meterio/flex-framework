@@ -5,9 +5,9 @@ import { blake2b256 } from 'meter-devkit/dist/cry/blake2b'
 import { sleep } from './common'
 import { options } from './options'
 
-/** class implements Connex.Driver leaves out Vendor related methods */
-export class DriverNoVendor implements Connex.Driver {
-    public head: Connex.Meter.Status['head']
+/** class implements Flex.Driver leaves out Vendor related methods */
+export class DriverNoVendor implements Flex.Driver {
+    public head: Flex.Meter.Status['head']
 
     private headResolvers = [] as Array<() => void>
     private readonly int = new PromInt()
@@ -15,8 +15,8 @@ export class DriverNoVendor implements Connex.Driver {
 
     constructor(
         private readonly net: Net,
-        readonly genesis: Connex.Meter.Block,
-        initialHead?: Connex.Meter.Status['head']
+        readonly genesis: Flex.Meter.Block,
+        initialHead?: Flex.Meter.Status['head']
     ) {
         if (initialHead) {
             this.head = initialHead
@@ -39,7 +39,7 @@ export class DriverNoVendor implements Connex.Driver {
     // implementations
     public pollHead() {
         return this.int.wrap(
-            new Promise<Connex.Meter.Status['head']>(resolve => {
+            new Promise<Flex.Meter.Status['head']>(resolve => {
                 this.headResolvers.push(() => resolve(this.head))
             }))
     }
@@ -89,31 +89,31 @@ export class DriverNoVendor implements Connex.Driver {
         return this.cache.getTied(`storage-${addr}-${key}`, revision, () =>
             this.httpGet(`accounts/${addr}/storage/${key}`, { revision }))
     }
-    public explain(arg: Connex.Driver.ExplainArg, revision: string, cacheTies?: string[]) {
+    public explain(arg: Flex.Driver.ExplainArg, revision: string, cacheTies?: string[]) {
         const cacheKey = `explain-${blake2b256(JSON.stringify(arg)).toString('hex')}`
         return this.cache.getTied(cacheKey, revision, () =>
             this.httpPost('accounts/*', arg, { revision }), cacheTies)
     }
-    public filterEventLogs(arg: Connex.Driver.FilterEventLogsArg) {
+    public filterEventLogs(arg: Flex.Driver.FilterEventLogsArg) {
         const cacheKey = `event-${blake2b256(JSON.stringify(arg)).toString('hex')}`
         return this.cache.getTied(cacheKey, this.head.id, () =>
             this.httpPost('logs/event', arg))
     }
-    public filterTransferLogs(arg: Connex.Driver.FilterTransferLogsArg) {
+    public filterTransferLogs(arg: Flex.Driver.FilterTransferLogsArg) {
         const cacheKey = `transfer-${blake2b256(JSON.stringify(arg)).toString('hex')}`
         return this.cache.getTied(cacheKey, this.head.id, () =>
             this.httpPost('logs/transfer', arg))
     }
     public signTx(
-        msg: Connex.Driver.SignTxArg,
-        option: Connex.Driver.SignTxOption
-    ): Promise<Connex.Driver.SignTxResult> {
+        msg: Flex.Driver.SignTxArg,
+        option: Flex.Driver.SignTxOption
+    ): Promise<Flex.Driver.SignTxResult> {
         throw new Error('not implemented')
     }
     public signCert(
-        msg: Connex.Driver.SignCertArg,
-        options: Connex.Driver.SignCertOption
-    ): Promise<Connex.Driver.SignCertResult> {
+        msg: Flex.Driver.SignCertArg,
+        options: Flex.Driver.SignCertOption
+    ): Promise<Flex.Driver.SignCertResult> {
         throw new Error(' not implemented')
     }
     public isAddressOwned(addr: string): Promise<boolean> {
@@ -153,7 +153,7 @@ export class DriverNoVendor implements Connex.Driver {
     private async headTrackerLoop() {
         for (; ;) {
             try {
-                const best = await this.int.wrap<Connex.Meter.Block>(this.httpGet('blocks/best'))
+                const best = await this.int.wrap<Flex.Meter.Block>(this.httpGet('blocks/best'))
                 if (best.id !== this.head.id && best.number >= this.head.number) {
                     this.head = {
                         id: best.id,

@@ -4,39 +4,39 @@ import BigNumber from 'bignumber.js'
 
 const WINDOW_LEN = 12
 
-type Slot = Connex.Meter.Status['head'] & {
+type Slot = Flex.Meter.Status['head'] & {
     bloom?: Bloom
-    block?: Connex.Meter.Block
+    block?: Flex.Meter.Block
 
     accounts: Map<string, Account>
-    txs: Map<string, Connex.Meter.Transaction>
-    receipts: Map<string, Connex.Meter.Receipt>
+    txs: Map<string, Flex.Meter.Transaction>
+    receipts: Map<string, Flex.Meter.Receipt>
     tied: Map<string, any>
 }
 
 export class Cache {
     private readonly irreversible = {
-        blocks: new LRU<string | number, Connex.Meter.Block>(256),
-        txs: new LRU<string, Connex.Meter.Transaction>(512),
-        receipts: new LRU<string, Connex.Meter.Receipt>(512)
+        blocks: new LRU<string | number, Flex.Meter.Block>(256),
+        txs: new LRU<string, Flex.Meter.Transaction>(512),
+        receipts: new LRU<string, Flex.Meter.Receipt>(512)
     }
     private readonly window: Slot[] = [];
 
     private candidatesUpdatedHeight: number = 0;
-    private candidates: Connex.Meter.Candidate[] = [];
+    private candidates: Flex.Meter.Candidate[] = [];
     private bucketsUpdatedHeight: number = 0;
-    private buckets: Connex.Meter.Bucket[] = [];
+    private buckets: Flex.Meter.Bucket[] = [];
     private stakeholdersUpdatedHeight: number = 0;
-    private stakeholders: Connex.Meter.Stakeholder[] = [];
+    private stakeholders: Flex.Meter.Stakeholder[] = [];
     private auctionUpdatedHeight: number = 0;
-    private auction: Connex.Meter.Auction| null = null;
+    private auction: Flex.Meter.Auction| null = null;
     private auctionSummaryUpdatedHeight: number = 0;
-    private auctionSummary: Connex.Meter.AuctionSummary|null = null;
+    private auctionSummary: Flex.Meter.AuctionSummary|null = null;
 
     public handleNewBlock(
-        head: Connex.Meter.Status['head'],
+        head: Flex.Meter.Status['head'],
         bloom?: { bits: string, k: number },
-        block?: Connex.Meter.Block
+        block?: Flex.Meter.Block
     ) {
         while (this.window.length > 0) {
             const top = this.window[this.window.length - 1]
@@ -74,7 +74,7 @@ export class Cache {
 
     public async getBlock(
         revision: string | number,
-        fetch: () => Promise<Connex.Meter.Block | null>
+        fetch: () => Promise<Flex.Meter.Block | null>
     ) {
         let block = this.irreversible.blocks.get(revision) || null
         if (block) {
@@ -104,7 +104,7 @@ export class Cache {
     }
 
     public async getCandidates(
-        fetch: () => Promise<Connex.Meter.Candidate[]>
+        fetch: () => Promise<Flex.Meter.Candidate[]>
     ) {
         let currHeight = 0
         if (this.window.length>0){
@@ -125,7 +125,7 @@ export class Cache {
     }
 
     public async getBuckets(
-        fetch: () => Promise<Connex.Meter.Bucket[]>
+        fetch: () => Promise<Flex.Meter.Bucket[]>
     ) {
         let currHeight = 0
         if (this.window.length>0){
@@ -146,7 +146,7 @@ export class Cache {
     }
 
     public async getStakeholders(
-        fetch: () => Promise<Connex.Meter.Stakeholder[]>
+        fetch: () => Promise<Flex.Meter.Stakeholder[]>
     ) {
         let currHeight = 0
         if (this.window.length>0){
@@ -167,7 +167,7 @@ export class Cache {
     }
 
     public async getAuction(
-        fetch: () => Promise<Connex.Meter.Auction>
+        fetch: () => Promise<Flex.Meter.Auction>
     ) {
         let currHeight = 0
         if (this.window.length>0){
@@ -190,7 +190,7 @@ export class Cache {
     }
 
     public async getAuctionSummary(
-        fetch: () => Promise<Connex.Meter.AuctionSummary>
+        fetch: () => Promise<Flex.Meter.AuctionSummary>
     ) {
         let currHeight = 0
         if (this.window.length>0){
@@ -215,7 +215,7 @@ export class Cache {
 
     public async getTx(
         txid: string,
-        fetch: () => Promise<Connex.Meter.Transaction | null>
+        fetch: () => Promise<Flex.Meter.Transaction | null>
     ) {
         let tx = this.irreversible.txs.get(txid) || null
         if (tx) {
@@ -244,7 +244,7 @@ export class Cache {
 
     public async getReceipt(
         txid: string,
-        fetch: () => Promise<Connex.Meter.Receipt | null>
+        fetch: () => Promise<Flex.Meter.Receipt | null>
     ) {
         let receipt = this.irreversible.receipts.get(txid) || null
         if (receipt) {
@@ -274,7 +274,7 @@ export class Cache {
     public async getAccount(
         addr: string,
         revision: string,
-        fetch: () => Promise<Connex.Meter.Account>
+        fetch: () => Promise<Flex.Meter.Account>
     ) {
         const found = this.findSlot(revision)
         for (let i = found.index; i >= 0; i--) {
@@ -371,7 +371,7 @@ function testBytesHex(bloom: Bloom, hex: string) {
 const ENERGY_GROWTH_RATE = 5000000000
 
 class Account {
-    constructor(readonly obj: Connex.Meter.Account, readonly initTimestamp: number) {
+    constructor(readonly obj: Flex.Meter.Account, readonly initTimestamp: number) {
     }
 
     public snapshot(timestamp: number) {

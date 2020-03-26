@@ -1,5 +1,5 @@
 
 interface Context {
-    readonly driver: Connex.Driver
-    readonly trackedHead: Connex.Meter.Status['head']
+    readonly driver: Flex.Driver
+    readonly trackedHead: Flex.Meter.Status['head']
 }

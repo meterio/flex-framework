@@ -1,7 +1,7 @@
 export function newBlockVisitor(
     ctx: Context,
     revision: string | number
-): Connex.Meter.BlockVisitor {
+): Flex.Meter.BlockVisitor {
 
     return {
         get revision() { return revision },

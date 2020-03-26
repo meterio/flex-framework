@@ -2,9 +2,9 @@ import * as V from 'validator-ts'
 import * as R from './rules'
 
 export function newDriverGuard(
-    driver: Connex.Driver,
+    driver: Flex.Driver,
     errHandler?: (err: Error) => void
-): Connex.Driver {
+): Flex.Driver {
 
     const test = <T>(obj: T, scheme: V.Scheme<T>, path: string) => {
         try {
@@ -14,7 +14,7 @@ export function newDriverGuard(
                 errHandler(err)
             } else {
                 // tslint:disable-next-line:no-console
-                console.warn(`Connex-Driver[MALFORMED RESPONSE]: ${err.message}`)
+                console.warn(`Flex-Driver[MALFORMED RESPONSE]: ${err.message}`)
             }
         }
         return obj
@@ -58,7 +58,7 @@ export function newDriverGuard(
             return driver.getReceipt(id)
                 .then(r => r ? test(r, receiptScheme, 'getReceipt()') : r)
         },
-        getAccount(addr: string, revision: string): Promise<Connex.Meter.Account> {
+        getAccount(addr: string, revision: string): Promise<Flex.Meter.Account> {
             return driver.getAccount(addr, revision)
                 .then(a => test(a, {
                     balance: R.hexString,
@@ -68,7 +68,7 @@ export function newDriverGuard(
                     hasCode: R.bool
                 }, 'getAccount()'))
         },
-        getCode(addr: string, revision: string): Promise<Connex.Meter.Code> {
+        getCode(addr: string, revision: string): Promise<Flex.Meter.Code> {
             return driver.getCode(addr, revision)
                 .then(c => test(c, {
                     code: R.bytes
@@ -127,27 +127,27 @@ export function newDriverGuard(
     }
 }
 
-const headScheme: V.Scheme<Connex.Meter.Status['head']> = {
+const headScheme: V.Scheme<Flex.Meter.Status['head']> = {
     id: R.bytes32,
     number: R.uint32,
     timestamp: R.uint64,
     parentID: R.bytes32
 }
 
-const memberScheme : V.Scheme<Connex.Meter.CommitteeMember> = {
+const memberScheme : V.Scheme<Flex.Meter.CommitteeMember> = {
     index: R.uint32,
     pubKey: R.string,
     netAddr: R.string
 }
 
-const qcScheme : V.Scheme<Connex.Meter.QuorumCert> = {
+const qcScheme : V.Scheme<Flex.Meter.QuorumCert> = {
     qcHeight: R.uint64,
     qcRound: R.uint64,
     voterBitArrayStr: R.string,
     epochID: R.uint64,
 }
 
-const blockScheme: V.Scheme<Connex.Meter.Block> = {
+const blockScheme: V.Scheme<Flex.Meter.Block> = {
     id: R.bytes32,
     number: R.uint32,
     size: R.uint32,
@@ -169,7 +169,7 @@ const blockScheme: V.Scheme<Connex.Meter.Block> = {
     nonce: R.uint64,
 }
 
-const txScheme: V.Scheme<Connex.Meter.Transaction> = {
+const txScheme: V.Scheme<Flex.Meter.Transaction> = {
     id: R.bytes32,
     chainTag: R.uint8,
     blockRef: R.bytes8,
@@ -193,7 +193,7 @@ const txScheme: V.Scheme<Connex.Meter.Transaction> = {
     }
 }
 
-const logMetaScheme: V.Scheme<Connex.Meter.LogMeta> = {
+const logMetaScheme: V.Scheme<Flex.Meter.LogMeta> = {
     blockID: R.bytes32,
     blockNumber: R.uint32,
     blockTimestamp: R.uint64,
@@ -201,31 +201,31 @@ const logMetaScheme: V.Scheme<Connex.Meter.LogMeta> = {
     txOrigin: R.address,
 }
 
-const eventScheme: V.Scheme<Connex.Meter.Event> = {
+const eventScheme: V.Scheme<Flex.Meter.Event> = {
     address: R.address,
     topics: [R.bytes32],
     data: R.bytes,
     meta: () => '',
     decoded: () => ''
 }
-const eventWithMetaScheme: V.Scheme<Connex.Meter.Event> = {
+const eventWithMetaScheme: V.Scheme<Flex.Meter.Event> = {
     ...eventScheme,
     meta: logMetaScheme
 }
 
-const transferScheme: V.Scheme<Connex.Meter.Transfer> = {
+const transferScheme: V.Scheme<Flex.Meter.Transfer> = {
     sender: R.address,
     recipient: R.address,
     amount: R.hexString,
     meta: () => '',
 }
 
-const transferWithMetaScheme: V.Scheme<Connex.Meter.Transfer> = {
+const transferWithMetaScheme: V.Scheme<Flex.Meter.Transfer> = {
     ...transferScheme,
     meta: logMetaScheme
 }
 
-const receiptScheme: V.Scheme<Connex.Meter.Receipt> = {
+const receiptScheme: V.Scheme<Flex.Meter.Receipt> = {
     gasUsed: R.uint64,
     gasPayer: R.address,
     paid: R.hexString,
@@ -245,7 +245,7 @@ const receiptScheme: V.Scheme<Connex.Meter.Receipt> = {
     }
 }
 
-const vmOutputScheme: V.Scheme<Connex.Meter.VMOutput> = {
+const vmOutputScheme: V.Scheme<Flex.Meter.VMOutput> = {
     data: R.bytes,
     vmError: R.string,
     gasUsed: R.uint64,
@@ -266,7 +266,7 @@ const vmOutputScheme: V.Scheme<Connex.Meter.VMOutput> = {
     decoded: () => ''
 }
 
-const candidateScheme: V.Scheme<Connex.Meter.Candidate> = {
+const candidateScheme: V.Scheme<Flex.Meter.Candidate> = {
     name: R.string,
     addr: R.string,
     pubKey: R.string,
@@ -276,13 +276,13 @@ const candidateScheme: V.Scheme<Connex.Meter.Candidate> = {
     buckets: [R.string],
 }
 
-const stakeholderScheme: V.Scheme<Connex.Meter.Stakeholder> = {
+const stakeholderScheme: V.Scheme<Flex.Meter.Stakeholder> = {
     holder: R.string,
     totalStake: R.string,
     buckets: [R.string]
 }
 
-const bucketScheme: V.Scheme<Connex.Meter.Bucket> = {
+const bucketScheme: V.Scheme<Flex.Meter.Bucket> = {
     id:R.string,
     owner:R.string,
     value:R.string,
@@ -296,7 +296,7 @@ const bucketScheme: V.Scheme<Connex.Meter.Bucket> = {
     totalVotes: R.string,
 }
 
-const auctionTxScheme: V.Scheme<Connex.Meter.AuctionTx> = {
+const auctionTxScheme: V.Scheme<Flex.Meter.AuctionTx> = {
     addr: R.string,
     amount: R.string,
     count: R.uint64,
@@ -304,7 +304,7 @@ const auctionTxScheme: V.Scheme<Connex.Meter.AuctionTx> = {
     lastTime: R.uint64,
 }
 
-const auctionScheme: V.Scheme<Connex.Meter.Auction> = {
+const auctionScheme: V.Scheme<Flex.Meter.Auction> = {
     auctionID: R.string,
     startHeight: R.uint64,
     endHeight: R.uint64,
@@ -315,7 +315,7 @@ const auctionScheme: V.Scheme<Connex.Meter.Auction> = {
     auctionTxs: [auctionTxScheme],
 }
 
-const auctionSummaryScheme: V.Scheme<Connex.Meter.AuctionSummary> = {
+const auctionSummaryScheme: V.Scheme<Flex.Meter.AuctionSummary> = {
     auctionID: R.string,
     startHeight: R.uint64,
     endHeight: R.uint64,

@@ -2,7 +2,7 @@ import { decodeRevertReason } from './revert-reason'
 import * as R from './rules'
 import * as V from 'validator-ts'
 
-export function newExplainer(ctx: Context): Connex.Meter.Explainer {
+export function newExplainer(ctx: Context): Flex.Meter.Explainer {
     const opts: {
         caller?: string
         gas?: number
@@ -52,7 +52,7 @@ export function newExplainer(ctx: Context): Connex.Meter.Explainer {
     }
 }
 
-const clauseScheme: V.Scheme<Connex.Meter.Clause> = {
+const clauseScheme: V.Scheme<Flex.Meter.Clause> = {
     to: V.nullable(R.address),
     token: R.uint32,
     value: R.bigInt,

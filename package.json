@@ -1,7 +1,7 @@
 {
-  "name": "meter-connex-framework",
-  "version": "1.1.2",
-  "description": "A library implements Meter Connex interface",
+  "name": "@meterio/flex-framework",
+  "version": "0.4.2",
+  "description": "A library implements Meter Flex interface",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -12,21 +12,23 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vechain/connex-framework.git"
+    "url": "git+https://github.com/meterio/flex-framework.git"
   },
   "keywords": [
-    "Dfinlab",
+    "Flex",
     "Meter",
-    "Connex",
+    "Meterio",
+    "Dfinlab",
     "Framework",
-    "Wallet"
+    "Blockchain",
+    "Defi"
   ],
   "author": "simonzg",
   "license": "LGPL-3.0",
   "bugs": {
-    "url": "https://github.com/dfinlab/meter-connex-framework/issues"
+    "url": "https://github.com/meterio/flex-framework/issues"
   },
-  "homepage": "https://github.com/vechain/connex-framework#readme",
+  "homepage": "https://github.com/meterio/flex-framework#readme",
   "devDependencies": {
     "tslint": "^5.17.0",
     "typescript": "^3.5.1"
@@ -36,8 +38,8 @@
     "axios": "^0.19.2",
     "bignumber": "^1.1.0",
     "lru-cache": "^5.1.1",
-    "simonzgconnex": "^1.1.7",
-    "meter-devkit": "^1.2.3",
+    "@meterio/flex": "^0.4.2",
+    "meter-devkit": "^1.1.1",
     "validator-ts": "^0.9.1"
   }
 }

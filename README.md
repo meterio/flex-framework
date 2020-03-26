@@ -1,25 +1,25 @@
-# Connex Framework
+# Flex Framework
 
-[![npm version](https://badge.fury.io/js/%40vechain%2Fconnex-framework.svg)](https://badge.fury.io/js/%40vechain%2Fconnex-framework)
+[![npm version](https://badge.fury.io/js/%40vechain%2Fflex-framework.svg)](https://badge.fury.io/js/%40vechain%2Fflex-framework)
 
-Connex Framework is a library implements Connex interface. 
-It helps various wallet instances offer consistent Connex interface to VeChain DApps.
+Flex Framework is a library implements Flex interface. 
+It helps various wallet instances offer consistent Flex interface to VeChain DApps.
 
 ## Installation
 
 ```sh
-npm i @vechain/connex-framework
+npm i @vechain/flex-framework
 ```
 
 ## Usage
 
-To create framework instance, Connex.Driver needs to be implemented
+To create framework instance, Flex.Driver needs to be implemented
 
 ```typescript
-import { Framework } from '@vechain/connex-framework'
-import '@vechain/connex.driver'
+import { Framework } from '@vechain/flex-framework'
+import '@vechain/flex.driver'
 
-class MyDriver implements Connex.Driver {
+class MyDriver implements Flex.Driver {
     // implementations
 }
 
@@ -30,15 +30,15 @@ const driver = new MyDriver()
 
 const framework = new Framework(driver)
 
-// here `framework` is the ready-to-use Connex instance object
+// here `framework` is the ready-to-use Flex instance object
 ```
 
 ## See also
 
 ### Driver implementations:
 
-* NodeJS - [connex.driver-nodejs](https://github.com/vechain/connex.driver-nodejs)
+* NodeJS - [flex.driver-nodejs](https://github.com/vechain/flex.driver-nodejs)
 
-### Connex playground
+### Flex playground
 
-* [connex repl](https://github.com/vechain/connex-repl)
+* [flex repl](https://github.com/vechain/flex-repl)

@@ -1,7 +1,7 @@
 export function newTxVisitor(
     ctx: Context,
     id: string
-): Connex.Meter.TransactionVisitor {
+): Flex.Meter.TransactionVisitor {
     return {
         get id() {
             return id

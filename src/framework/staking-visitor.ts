@@ -1,6 +1,6 @@
 export function newStakingVisitor(
     ctx: Context
-): Connex.Meter.StakingVisitor {
+): Flex.Meter.StakingVisitor {
     return {
         getCandidates: () => {
             return ctx.driver.getCandidates()

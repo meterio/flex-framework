@@ -6,7 +6,7 @@ import * as R from './rules'
 export function newAccountVisitor(
     ctx: Context,
     addr: string
-): Connex.Meter.AccountVisitor {
+): Flex.Meter.AccountVisitor {
     return {
         get address() { return addr },
         get: () => {
