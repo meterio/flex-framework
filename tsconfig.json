@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+      "target": "es6",
+      "module": "commonjs",
+      "strict": true,
+      "outDir": "./dist",
+      "inlineSourceMap": true,
+      "declaration": true,
+      "moduleResolution": "node",
+      "allowSyntheticDefaultImports": true,
+      "resolveJsonModule": true,
+      "types": ["simonzgconnex"],
+      "baseUrl": ".",
+      "paths": {
+        "*": [ "src/*" ]
+      }
+    },
+    "include": [
+      "./src"
+    ],
+    
+}

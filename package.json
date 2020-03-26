@@ -1,0 +1,43 @@
+{
+  "name": "meter-connex-framework",
+  "version": "1.1.2",
+  "description": "A library implements Meter Connex interface",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "rm -rf dist/;tsc -p .",
+    "lint": "tslint -p .",
+    "prepare": "npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vechain/connex-framework.git"
+  },
+  "keywords": [
+    "Dfinlab",
+    "Meter",
+    "Connex",
+    "Framework",
+    "Wallet"
+  ],
+  "author": "simonzg",
+  "license": "LGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/dfinlab/meter-connex-framework/issues"
+  },
+  "homepage": "https://github.com/vechain/connex-framework#readme",
+  "devDependencies": {
+    "tslint": "^5.17.0",
+    "typescript": "^3.5.1"
+  },
+  "dependencies": {
+    "@types/lru-cache": "^5.1.0",
+    "axios": "^0.19.2",
+    "bignumber": "^1.1.0",
+    "lru-cache": "^5.1.1",
+    "simonzgconnex": "^1.1.7",
+    "meter-devkit": "^1.2.3",
+    "validator-ts": "^0.9.1"
+  }
+}
