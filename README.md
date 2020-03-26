@@ -1,6 +1,6 @@
 # Flex Framework
 
-[![npm version](https://badge.fury.io/js/%40vechain%2Fflex-framework.svg)](https://badge.fury.io/js/%40vechain%2Fflex-framework)
+[![npm version](https://badge.fury.io/js/%meterio%2Fflex-framework.svg)](https://badge.fury.io/js/%40meterio%2Fflex-framework)
 
 Flex Framework is a library implements Flex interface. 
 It helps various wallet instances offer consistent Flex interface to VeChain DApps.
@@ -8,7 +8,7 @@ It helps various wallet instances offer consistent Flex interface to VeChain DAp
 ## Installation
 
 ```sh
-npm i @vechain/flex-framework
+npm i @meterio/flex-framework
 ```
 
 ## Usage
@@ -16,8 +16,8 @@ npm i @vechain/flex-framework
 To create framework instance, Flex.Driver needs to be implemented
 
 ```typescript
-import { Framework } from '@vechain/flex-framework'
-import '@vechain/flex.driver'
+import { Framework } from '@meterio/flex-framework'
+import '@meterio/flex.driver'
 
 class MyDriver implements Flex.Driver {
     // implementations
@@ -35,10 +35,6 @@ const framework = new Framework(driver)
 
 ## See also
 
-### Driver implementations:
-
-* NodeJS - [flex.driver-nodejs](https://github.com/vechain/flex.driver-nodejs)
-
 ### Flex playground
 
-* [flex repl](https://github.com/vechain/flex-repl)
+* [flex repl](https://github.com/meterio/flex-repl)
