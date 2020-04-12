@@ -1,4 +1,4 @@
-import { abi } from 'meter-devkit/dist/abi'
+import { abi } from '@meterio/devkit/dist/abi'
 import { newFilter } from './filter'
 import { BadParameter, test } from './rules'
 

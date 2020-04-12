@@ -1,6 +1,6 @@
 import { newEventVisitor } from './event-visitor'
 import { newMethod } from './method'
-import { abi } from 'meter-devkit/dist/abi'
+import { abi } from '@meterio/devkit/dist/abi'
 import * as R from './rules'
 
 export function newAccountVisitor(

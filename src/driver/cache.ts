@@ -1,5 +1,5 @@
 import * as LRU from 'lru-cache'
-import { Bloom } from 'meter-devkit/dist/bloom'
+import { Bloom } from '@meterio/devkit/dist/bloom'
 import BigNumber from 'bignumber.js'
 
 const WINDOW_LEN = 12

@@ -1,6 +1,6 @@
 import { Wallet } from './interfaces'
-import { secp256k1 } from 'meter-devkit/dist/cry/secp256k1'
-import { publicKeyToAddress } from 'meter-devkit/dist/cry/address'
+import { secp256k1 } from '@meterio/devkit/dist/cry/secp256k1'
+import { publicKeyToAddress } from '@meterio/devkit/dist/cry/address'
 
 /** class simply implements Wallet interface */
 export class SimpleWallet implements Wallet {

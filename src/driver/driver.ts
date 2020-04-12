@@ -1,8 +1,8 @@
 import { DriverNoVendor } from "./driver-no-vendor";
 import { Net, Wallet } from "./interfaces";
-import { Transaction } from "meter-devkit/dist/transaction";
-import { Certificate } from "meter-devkit/dist/certificate";
-import { blake2b256 } from "meter-devkit/dist/cry/blake2b";
+import { Transaction } from "@meterio/devkit/dist/transaction";
+import { Certificate } from "@meterio/devkit/dist/certificate";
+import { blake2b256 } from "@meterio/devkit/dist/cry/blake2b";
 import { randomBytes } from "crypto";
 import { options } from "./options";
 

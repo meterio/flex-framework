@@ -1,7 +1,7 @@
 import { Net } from './interfaces'
 import { PromInt, InterruptedError } from './promint'
 import { Cache } from './cache'
-import { blake2b256 } from 'meter-devkit/dist/cry/blake2b'
+import { blake2b256 } from '@meterio/devkit/dist/cry/blake2b'
 import { sleep } from './common'
 import { options } from './options'
 

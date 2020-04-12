@@ -39,7 +39,7 @@
     "bignumber": "^1.1.0",
     "lru-cache": "^5.1.1",
     "@meterio/flex": "^0.4.2",
-    "meter-devkit": "^1.1.1",
+    "@meterio/devkit": "^1.2.4",
     "validator-ts": "^0.9.1"
   }
 }

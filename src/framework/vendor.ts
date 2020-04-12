@@ -1,6 +1,6 @@
 import * as R from "./rules";
 import * as V from "validator-ts";
-import { abi } from "meter-devkit/dist/abi";
+import { abi } from "@meterio/devkit/dist/abi";
 
 export function newVendor(driver: Flex.Driver): Flex.Vendor {
   return {

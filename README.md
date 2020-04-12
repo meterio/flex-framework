@@ -3,7 +3,7 @@
 [![npm version](https://badge.fury.io/js/%meterio%2Fflex-framework.svg)](https://badge.fury.io/js/%40meterio%2Fflex-framework)
 
 Flex Framework is a library implements Flex interface. 
-It helps various wallet instances offer consistent Flex interface to VeChain DApps.
+It helps various wallet instances offer consistent Flex interface to Meter Dapps.
 
 ## Installation
 

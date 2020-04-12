@@ -1,4 +1,4 @@
-import { abi } from 'meter-devkit/dist/abi'
+import { abi } from '@meterio/devkit/dist/abi'
 import { decodeRevertReason } from './revert-reason'
 import * as R from './rules'
 
