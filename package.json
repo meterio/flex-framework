@@ -1,6 +1,6 @@
 {
   "name": "@meterio/flex-framework",
-  "version": "0.4.7",
+  "version": "0.4.8",
   "description": "A library implements Meter Flex interface",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -33,7 +33,7 @@
     "typescript": "^3.5.1"
   },
   "dependencies": {
-    "@meterio/devkit": "^1.2.4",
+    "@meterio/devkit": "^1.2.14",
     "@meterio/flex": "^0.4.6",
     "@types/lru-cache": "^5.1.0",
     "axios": "^0.19.2",
