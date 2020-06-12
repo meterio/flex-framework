@@ -1,6 +1,6 @@
 {
   "name": "@meterio/flex-framework",
-  "version": "0.4.6",
+  "version": "0.4.7",
   "description": "A library implements Meter Flex interface",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
