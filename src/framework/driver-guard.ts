@@ -342,6 +342,7 @@ const candidateScheme: V.Scheme<Flex.Meter.Candidate> = {
   ipAddr: R.string,
   port: R.uint32,
   totalVotes: R.string,
+  commission: R.uint32,
   buckets: [R.string],
 };
 
