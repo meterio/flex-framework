@@ -280,6 +280,7 @@ const transferScheme: V.Scheme<Flex.Meter.Transfer> = {
   sender: R.address,
   recipient: R.address,
   amount: R.hexString,
+  token: R.uint32,
   meta: () => '',
 };
 
@@ -329,6 +330,7 @@ const vmOutputScheme: V.Scheme<Flex.Meter.VMOutput> = {
       sender: R.address,
       recipient: R.address,
       amount: R.hexString,
+      token: R.uint32,
       meta: () => '',
     },
   ],
