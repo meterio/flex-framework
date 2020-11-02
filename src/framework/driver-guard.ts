@@ -223,6 +223,7 @@ const blockScheme: V.Scheme<Flex.Meter.Block> = {
   receiptsRoot: R.bytes32,
   signer: R.address,
   isTrunk: R.bool,
+  isKBlock: R.bool,
   transactions: [R.bytes32],
   lastKBlockHeight: R.uint32,
   committee: [memberScheme],
