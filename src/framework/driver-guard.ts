@@ -229,6 +229,8 @@ const blockScheme: V.Scheme<Flex.Meter.Block> = {
   committee: [memberScheme],
   qc: qcScheme,
   nonce: R.uint64,
+  epoch: R.uint64,
+  kblockData: [R.string],
 };
 
 const txScheme: V.Scheme<Flex.Meter.Transaction> = {
@@ -340,7 +342,8 @@ const vmOutputScheme: V.Scheme<Flex.Meter.VMOutput> = {
 
 const candidateScheme: V.Scheme<Flex.Meter.Candidate> = {
   name: R.string,
-  addr: R.string,
+  description: R.string,
+  address: R.string,
   pubKey: R.string,
   ipAddr: R.string,
   port: R.uint32,
@@ -360,42 +363,59 @@ const bucketScheme: V.Scheme<Flex.Meter.Bucket> = {
   owner: R.string,
   value: R.string,
   token: R.uint32,
+  nonce: R.uint64,
+  autobid: R.uint8,
   createTime: R.string,
   unbounded: R.bool,
   candidate: R.string,
   option: R.uint32,
   rate: R.uint32,
-  bonusVotes: R.string,
+  bonusVotes: R.uint64,
   totalVotes: R.string,
+  matureTime: R.uint64,
+  calcLastTime: R.uint64,
 };
 
 const auctionTxScheme: V.Scheme<Flex.Meter.AuctionTx> = {
-  addr: R.string,
+  txid: R.string,
+  address: R.string,
   amount: R.string,
-  count: R.uint64,
+  type: R.string,
+  timestamp: R.uint64,
   nonce: R.uint64,
-  lastTime: R.uint64,
 };
 
 const auctionScheme: V.Scheme<Flex.Meter.Auction> = {
   auctionID: R.string,
   startHeight: R.uint64,
+  startEpoch: R.uint64,
   endHeight: R.uint64,
+  endEpoch: R.uint64,
   releasedMTRG: R.string,
+  reservedMTRG: R.string,
   reservedPrice: R.string,
   createTime: R.uint64,
   receivedMTR: R.string,
   auctionTxs: [auctionTxScheme],
 };
 
+const distMTRGScheme: V.Scheme<Flex.Meter.DistMtrg> = {
+  addr: R.string,
+  amount: R.string,
+};
+
 const auctionSummaryScheme: V.Scheme<Flex.Meter.AuctionSummary> = {
   auctionID: R.string,
   startHeight: R.uint64,
+  startEpoch: R.uint64,
   endHeight: R.uint64,
+  endEpoch: R.uint64,
   releasedMTRG: R.string,
+  reservedMTRG: R.string,
   reservedPrice: R.string,
   createTime: R.uint64,
   receivedMTR: R.string,
   actualPrice: R.string,
-  leftoverMTRG: R.string,
+  auctionTxs: [auctionTxScheme],
+  distMTRG: [distMTRGScheme],
 };
