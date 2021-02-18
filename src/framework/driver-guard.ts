@@ -208,6 +208,13 @@ const qcScheme: V.Scheme<Flex.Meter.QuorumCert> = {
   epochID: R.uint64,
 };
 
+const powBlockScheme: V.Scheme<Flex.Meter.PowBlock> = {
+  hash: R.string,
+  prevBlock: R.string,
+  height: R.uint32,
+  beneficiary: R.string,
+};
+
 const blockScheme: V.Scheme<Flex.Meter.Block> = {
   id: R.bytes32,
   number: R.uint32,
@@ -231,6 +238,7 @@ const blockScheme: V.Scheme<Flex.Meter.Block> = {
   nonce: R.uint64,
   epoch: R.uint64,
   kblockData: [R.string],
+  powBlocks: [powBlockScheme],
 };
 
 const txScheme: V.Scheme<Flex.Meter.Transaction> = {
@@ -410,6 +418,7 @@ const auctionSummaryScheme: V.Scheme<Flex.Meter.AuctionSummary> = {
   startEpoch: R.uint64,
   endHeight: R.uint64,
   endEpoch: R.uint64,
+  sequence: R.uint64,
   releasedMTRG: R.string,
   reservedMTRG: R.string,
   reservedPrice: R.string,
