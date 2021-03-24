@@ -26,6 +26,7 @@ export class DriverNoVendor implements Flex.Driver {
         number: genesis.number,
         timestamp: genesis.timestamp,
         parentID: genesis.parentID,
+        epoch: genesis.epoch,
       };
     }
     this.headTrackerLoop();
@@ -182,6 +183,7 @@ export class DriverNoVendor implements Flex.Driver {
             number: best.number,
             timestamp: best.timestamp,
             parentID: best.parentID,
+            epoch: best.epoch,
           };
           this.cache.handleNewBlock(this.head, undefined, best);
           this.emitNewHead();

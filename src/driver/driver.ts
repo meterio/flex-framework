@@ -1,10 +1,10 @@
-import { DriverNoVendor } from "./driver-no-vendor";
-import { Net, Wallet } from "./interfaces";
-import { Transaction } from "@meterio/devkit/dist/transaction";
-import { Certificate } from "@meterio/devkit/dist/certificate";
-import { blake2b256 } from "@meterio/devkit/dist/cry/blake2b";
-import { randomBytes } from "crypto";
-import { options } from "./options";
+import { DriverNoVendor } from './driver-no-vendor';
+import { Net, Wallet } from './interfaces';
+import { Transaction } from '@meterio/devkit/dist/transaction';
+import { Certificate } from '@meterio/devkit/dist/certificate';
+import { blake2b256 } from '@meterio/devkit/dist/cry/blake2b';
+import { randomBytes } from 'crypto';
+import { options } from './options';
 
 /** class fully implements Flex.Driver */
 export class Driver extends DriverNoVendor {
@@ -15,14 +15,14 @@ export class Driver extends DriverNoVendor {
    * @param wallet
    */
   public static async connect(net: Net, wallet?: Wallet) {
-    const genesis: Flex.Meter.Block = await net.http("GET", "blocks/0");
-    const best: Flex.Meter.Block = await net.http("GET", "blocks/best", {
-      validateResponseHeader: headers => {
-        const xgid = headers["x-genesis-id"];
+    const genesis: Flex.Meter.Block = await net.http('GET', 'blocks/0');
+    const best: Flex.Meter.Block = await net.http('GET', 'blocks/best', {
+      validateResponseHeader: (headers) => {
+        const xgid = headers['x-genesis-id'];
         if (xgid && xgid !== genesis.id) {
           throw new Error(`responded 'x-genesis-id' not matched`);
         }
-      }
+      },
     });
 
     return new Driver(
@@ -32,7 +32,8 @@ export class Driver extends DriverNoVendor {
         id: best.id,
         number: best.number,
         timestamp: best.timestamp,
-        parentID: best.parentID
+        parentID: best.parentID,
+        epoch: best.epoch,
       },
       wallet
     );
@@ -44,13 +45,13 @@ export class Driver extends DriverNoVendor {
   /** params for tx construction */
   public txParams = {
     expiration: 18,
-    gasPriceCoef: 0
+    gasPriceCoef: 0,
   };
 
   constructor(
     net: Net,
     genesis: Flex.Meter.Block,
-    initialHead?: Flex.Meter.Status["head"],
+    initialHead?: Flex.Meter.Status['head'],
     private readonly wallet?: Wallet
   ) {
     super(net, genesis, initialHead);
@@ -61,11 +62,11 @@ export class Driver extends DriverNoVendor {
     option: Flex.Driver.SignTxOption
   ): Promise<Flex.Driver.SignTxResult> {
     const key = this.findKey(option.signer);
-    const clauses = msg.map(c => ({
+    const clauses = msg.map((c) => ({
       to: c.to,
       value: c.value,
       data: c.data,
-      token: c.token
+      token: c.token,
     }));
     const gas = option.gas || (await this.estimateGas(clauses, key.address));
 
@@ -77,30 +78,30 @@ export class Driver extends DriverNoVendor {
       gasPriceCoef: this.txParams.gasPriceCoef,
       gas,
       dependsOn: option.dependsOn || null,
-      nonce: "0x" + randomBytes(8).toString("hex")
+      nonce: '0x' + randomBytes(8).toString('hex'),
     };
 
     let tx: Transaction | undefined;
     if (option.delegationHandler) {
       const delegatedTx = new Transaction({
         ...txBody,
-        reserved: { features: 1 /* vip191 */ }
+        reserved: { features: 1 /* vip191 */ },
       });
       const originSig = await key.sign(delegatedTx.signingHash());
       try {
         const result = await option.delegationHandler({
-          raw: "0x" + delegatedTx.encode().toString("hex"),
-          origin: key.address
+          raw: '0x' + delegatedTx.encode().toString('hex'),
+          origin: key.address,
         });
         delegatedTx.signature = Buffer.concat([
           originSig,
-          Buffer.from(result.signature.slice(2), "hex")
+          Buffer.from(result.signature.slice(2), 'hex'),
         ]);
         tx = delegatedTx;
       } catch (err) {
         if (!options.disableErrorLog) {
           // tslint:disable-next-line: no-console
-          console.warn("tx delegation error: ", err);
+          console.warn('tx delegation error: ', err);
         }
         // fallback to non-vip191 tx
       }
@@ -110,20 +111,20 @@ export class Driver extends DriverNoVendor {
       tx.signature = await key.sign(tx.signingHash());
     }
 
-    const raw = "0x" + tx.encode().toString("hex");
+    const raw = '0x' + tx.encode().toString('hex');
     if (this.onTxCommit) {
       this.onTxCommit({
         id: tx.id!,
         raw,
         resend: async () => {
           await this.sendTx(raw);
-        }
+        },
       });
     }
     await this.sendTx(raw);
     return {
       txid: tx.id!,
-      signer: key.address
+      signer: key.address,
     };
   }
 
@@ -134,24 +135,24 @@ export class Driver extends DriverNoVendor {
     const key = this.findKey(options.signer);
 
     const annex = {
-      domain: "localhost",
+      domain: 'localhost',
       timestamp: this.head.timestamp,
-      signer: key.address
+      signer: key.address,
     };
     const unsigned = Certificate.encode({
       ...msg,
-      ...annex
+      ...annex,
     });
     const signature = await key.sign(blake2b256(unsigned));
     return {
       annex,
-      signature: "0x" + signature.toString("hex")
+      signature: '0x' + signature.toString('hex'),
     };
   }
   public isAddressOwned(addr: string) {
     return Promise.resolve(
       this.wallet
-        ? this.wallet.list.findIndex(k => k.address === addr) >= 0
+        ? this.wallet.list.findIndex((k) => k.address === addr) >= 0
         : false
     );
   }
@@ -159,16 +160,16 @@ export class Driver extends DriverNoVendor {
   private findKey(addr?: string) {
     if (this.wallet) {
       const keys = this.wallet.list;
-      const key = addr ? keys.find(k => k.address === addr) : keys[0];
+      const key = addr ? keys.find((k) => k.address === addr) : keys[0];
       if (key) {
         return key;
       }
     }
-    throw new Error("empty wallet");
+    throw new Error('empty wallet');
   }
 
   private sendTx(raw: string) {
-    return this.httpPost("transactions", { raw });
+    return this.httpPost('transactions', { raw });
   }
 
   private async estimateGas(
@@ -183,7 +184,7 @@ export class Driver extends DriverNoVendor {
     const outputs: Flex.Meter.VMOutput[] = await this.explain(
       {
         clauses,
-        caller
+        caller,
       },
       this.head.id
     );

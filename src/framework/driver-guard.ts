@@ -193,6 +193,7 @@ const headScheme: V.Scheme<Flex.Meter.Status['head']> = {
   number: R.uint32,
   timestamp: R.uint64,
   parentID: R.bytes32,
+  epoch: R.uint64,
 };
 
 const memberScheme: V.Scheme<Flex.Meter.CommitteeMember> = {
