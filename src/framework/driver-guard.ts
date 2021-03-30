@@ -33,11 +33,29 @@ export function newDriverGuard(
         .getBlock(revision)
         .then((b) => (b ? test(b, blockScheme, 'getBlock()') : b));
     },
+    getCandidate(addr) {
+      return driver
+        .getCandidate(addr)
+        .then((c) => (c ? test(c, candidateScheme, 'getCandidate()') : c));
+    },
+    getBucket(id) {
+      return driver
+        .getBucket(id)
+        .then((b) => (b ? test(b, bucketScheme, 'getBucket()') : b));
+    },
+    getJaileds() {
+      return driver
+        .getJaileds()
+        .then((js) =>
+          js ? js.map((j) => test(j, jailedScheme, 'getJaileds()')) : js
+        );
+    },
+
     getCandidates() {
       return driver
         .getCandidates()
         .then((cs) =>
-          cs ? cs.map((c) => test(c, candidateScheme, 'getCandidate()')) : cs
+          cs ? cs.map((c) => test(c, candidateScheme, 'getCandidates()')) : cs
         );
     },
     getBuckets() {
@@ -383,6 +401,15 @@ const bucketScheme: V.Scheme<Flex.Meter.Bucket> = {
   totalVotes: R.string,
   matureTime: R.uint64,
   calcLastTime: R.uint64,
+};
+
+const jailedScheme: V.Scheme<Flex.Meter.Jailed> = {
+  name: R.string,
+  address: R.string,
+  pubKey: R.string,
+  totalPoints: R.uint32,
+  bailAmount: R.uint64,
+  jailedTime: R.uint64,
 };
 
 const auctionTxScheme: V.Scheme<Flex.Meter.AuctionTx> = {

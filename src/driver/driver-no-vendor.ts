@@ -66,6 +66,18 @@ export class DriverNoVendor implements Flex.Driver {
       this.httpGet(`accounts/${addr}`, { revision })
     );
   }
+  public getJaileds() {
+    return this.cache.getJaileds(() => this.httpGet(`slashing/injail`));
+  }
+  public getCandidate(addr: string) {
+    return this.httpGet(
+      `staking/candidates/${addr}`
+    ) as Promise<Flex.Meter.Candidate>;
+  }
+  public getBucket(id: string) {
+    return this.httpGet(`staking/buckets/${id}`) as Promise<Flex.Meter.Bucket>;
+  }
+
   public getCandidates() {
     return this.cache.getCandidates(() => this.httpGet(`staking/candidates`));
   }

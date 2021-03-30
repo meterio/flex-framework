@@ -28,6 +28,8 @@ export class Cache {
   private buckets: Flex.Meter.Bucket[] = [];
   private stakeholdersUpdatedHeight: number = 0;
   private stakeholders: Flex.Meter.Stakeholder[] = [];
+  private jailedsUpdatedHeight: number = 0;
+  private jaileds: Flex.Meter.Jailed[] = [];
   private auctionUpdatedHeight: number = 0;
   private auction: Flex.Meter.Auction | null = null;
   private auctionSummariesUpdatedHeight: number = 0;
@@ -122,6 +124,25 @@ export class Cache {
     }
 
     return candidateList;
+  }
+
+  public async getJaileds(fetch: () => Promise<Flex.Meter.Jailed[]>) {
+    let currHeight = 0;
+    if (this.window.length > 0) {
+      const top = this.window[this.window.length - 1];
+      currHeight = top.number;
+      if (top.number <= this.jailedsUpdatedHeight) {
+        return this.jaileds;
+      }
+    }
+
+    let jailedList = await fetch();
+    if (jailedList) {
+      this.jaileds = jailedList;
+      this.jailedsUpdatedHeight = currHeight;
+    }
+
+    return jailedList;
   }
 
   public async getBuckets(fetch: () => Promise<Flex.Meter.Bucket[]>) {

@@ -1,5 +1,6 @@
 import { newAccountVisitor } from './account-visitor';
-import { newStakingVisitor } from './staking-visitor';
+import { newBucketVisitor } from './bucket-visitor';
+import { newCandidateVisitor } from './candidate-visitor';
 import { newAuctionVisitor } from './auction-visitor';
 import { newBlockVisitor } from './block-visitor';
 import { newTxVisitor } from './tx-visitor';
@@ -63,13 +64,22 @@ export function newMeter(driver: Flex.Driver): Flex.Meter {
     },
     explain: () => newExplainer(ctx),
     candidates: () => {
-      return newStakingVisitor(ctx).getCandidates();
+      return ctx.driver.getCandidates();
     },
     buckets: () => {
-      return newStakingVisitor(ctx).getBuckets();
+      return ctx.driver.getBuckets();
     },
     stakeholders: () => {
-      return newStakingVisitor(ctx).getStakeholders();
+      return ctx.driver.getStakeholders();
+    },
+    jaileds: () => {
+      return ctx.driver.getJaileds();
+    },
+    bucket: (id) => {
+      return newBucketVisitor(ctx, id);
+    },
+    candidate: (addr) => {
+      return newCandidateVisitor(ctx, addr);
     },
     auction: () => {
       return newAuctionVisitor(ctx).get();
