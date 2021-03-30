@@ -36,7 +36,7 @@
     "@meterio/devkit": "^1.4.6",
     "@meterio/flex": "^0.5.8",
     "@types/lru-cache": "^5.1.0",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "bignumber": "^1.1.0",
     "lru-cache": "^5.1.1",
     "validator-ts": "^0.9.1"
